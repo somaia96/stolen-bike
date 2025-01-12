@@ -5,4 +5,5 @@ export interface IBike {
   stolen_location: string;
   large_img: string;
   date_stolen: number | null;
+  thumb:string;
 }

@@ -18,10 +18,10 @@ export default function Bike({ bike }: IProps) {
 
   let timestamp = new Date(bike.date_stolen!);
   return (
-    <Card className="overflow-hidden m-auto w-full flex max-w-[24rem] my-3 md:max-w-[80%] md:h-56 flex-col md:flex-row">
+    <Card className="overflow-hidden lg:max-w-[70%] m-auto w-full flex max-w-[24rem] my-3 md:max-w-[80%] md:h-56 flex-col md:flex-row">
       <CardHeader className="m-0 h-56 md:h-auto w-full md:w-1/4 shrink-0 bg-cover bg-center bg-gray-100 flex justify-center items-center">
         {bike.large_img ? <img
-          src={bike.large_img}
+          src={bike.thumb}
           alt="card-image"
           className="h-full w-full object-cover bg-transparent"
         /> : <BikeSvg />}
@@ -35,17 +35,17 @@ export default function Bike({ bike }: IProps) {
         </CardDescription>
       </CardContent>
       <CardFooter className="w-auto p-6">
-        <h6 className="font-bold text-gray-800 text-lg">
-          Date Stolen :
+        <h6 className="font-bold text-gray-700 text-lg">
+          Stolen at :
         </h6>
-        <p>
-          {timestamp.toUTCString() ? timestamp.toUTCString() : "No Date"}
+        <p className="text-gray-600">
+          {timestamp ? timestamp.toUTCString() : "No Date"}
         </p>
-        <h6 className="font-bold text-gray-800 text-lg">
+        <h6 className="font-bold text-gray-700 text-lg">
           Location :
         </h6>
-        <p>
-          {bike.stolen_location ? bike.stolen_location : "No Location"}
+        <p className="text-gray-600">
+          {bike.stolen_location ? bike.stolen_location : "Unknown Location"}
         </p>
       </CardFooter>
     </Card>

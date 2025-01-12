@@ -1,25 +1,22 @@
 import Bike from "../components/Bike"
-import { useEffect, useState } from "react"
 import { IBike } from "../interfaces"
+import instance from "@/api/instance"
+import { useQuery } from '@tanstack/react-query'
 
 const Home = () => {
-  const [bikes, setBikes] = useState<IBike[]>([])
 
-  useEffect(() => {
-    try {
-      (async()=>{
-       let res = await(await fetch(`https://bikeindex.org/api/v3/search?page=1&per_page=10`)).json()
-        setBikes(res.bikes);
-     })()
-    } catch (error) {
-      console.error('Error fetching data:', error)
+  const { data:bikes } = useQuery({
+    queryKey: [`bikesData`],
+    queryFn: async () => {
+      const { data } = await instance.get(`/v3/search?page=11001&per_page=10`)
+      return data.data
     }
-  }, [])
+  })
 
   return (
     <div className="container space-y-3 m-auto">
       {
-        bikes.map((bike)=><Bike key={bike.id} bike={bike} />)
+        bikes.map((bike:IBike)=><Bike key={bike.id} bike={bike} />)
       }
       
     </div>
