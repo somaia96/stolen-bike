@@ -19,7 +19,7 @@ const Home = () => {
     queryKey: [`countData_${query}`],
     queryFn: async () => {
       const { data } = await instance.get(`/v3/search/count?query=${query}&stolenness=all`)
-      return data.stolen < 10 ? 1 : data.stolen/10
+      return data.stolen < 10 ? 1 : Math.ceil(data.stolen / 10)
     }
   })
   // Search By Page Number & Title || All Bikes Information
@@ -58,7 +58,7 @@ const Home = () => {
         <div className="w-11/12 md:w-10/12 max-w-[24rem] md:max-w-[80%] lg:max-w-[70%] m-auto">
           {bikes.map((bike: IBike) => <Bike key={bike.id} bike={bike} />)}
         </div>
-        <PaginationComponent searchParams={searchParams} setSearchParams={setSearchParams} page={page} setPage={setPage} count={count!} /></>)
+        {count! > 0 ? <PaginationComponent searchParams={searchParams} setSearchParams={setSearchParams} page={page} setPage={setPage} count={count!} />:null}</>)
         : <NoBike />}
     </div>
   )

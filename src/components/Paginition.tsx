@@ -15,7 +15,7 @@ interface IProps {
   setSearchParams: (val: {}) => void;
   page: number;
 }
-const PaginationComponent = ({ page, setPage, count,searchParams, setSearchParams }: IProps) => {
+const PaginationComponent = ({ page, setPage, count, searchParams, setSearchParams }: IProps) => {
   const handleChangePage = (item: number) => {
     setPage(item);
     searchParams.set("page", `${item}`);
@@ -33,6 +33,7 @@ const PaginationComponent = ({ page, setPage, count,searchParams, setSearchParam
     setSearchParams(searchParams);
     setPage((prev) => prev - 1);
   }
+console.log(count);
 
   return (
     <div className="flex justify-items-center justify-center">
@@ -56,7 +57,7 @@ const PaginationComponent = ({ page, setPage, count,searchParams, setSearchParam
             <PaginationEllipsis />
           </PaginationItem>
           <PaginationItem>
-            <PaginationLink isActive={page == count} className={page > count - 3 ? "hidden" : "rounded-full cursor-pointer"} onClick={() => { setSearchParams({ page: count }); setPage(count);}}>
+            <PaginationLink isActive={page == count} className={page > count - 3 ? "hidden" : "rounded-full cursor-pointer"} onClick={() => { setSearchParams({ page: count }); setPage(count); }}>
               {count}
             </PaginationLink>
           </PaginationItem>
