@@ -8,7 +8,7 @@ import { KeyboardEvent, useState } from "react"
 import PaginationComponent from "@/components/Paginition"
 import { BikeIcon, SearchIcon } from "lucide-react"
 import NoBike from "@/components/NoBike";
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 const Home = () => {
   const [query, setQuery] = useState("");
@@ -19,7 +19,8 @@ const Home = () => {
     queryKey: [`countData_${query}`],
     queryFn: async () => {
       const { data } = await instance.get(`/v3/search/count?query=${query}&stolenness=all`)
-      return data.stolen < 10 ? 1 : Math.ceil(data.stolen / 10)
+      // return Math.ceil(data.stolen / 10)
+      return data.stolen
     }
   })
   // Search By Page Number & Title || All Bikes Information
@@ -47,18 +48,22 @@ const Home = () => {
   if (error || countError) return <Alert />
 
   return (
-    <div className="container space-y-3 m-auto my-5">
+    <div className="container space-y-3 my-5 w-11/12 md:w-10/12 max-w-[24rem] md:max-w-[80%] lg:max-w-[70%] m-auto">
       <h1 className="text-5xl font-semibold my-5 justify-center items-center gap-3 flex text-gray-800">Stolen Bikes <BikeIcon className="text-gray-800" size={40} /> </h1>
-      <div className="relative w-11/12 md:w-[70%] m-auto">
+      <div className="relative">
         <p className="text-sm text-red-500 absolute top-1/2 -translate-y-1/2 right-3">Press Enter To Search</p>
         <input onKeyDown={onSearch} className="bg-gray-100 rounded-md w-full outline-gray-200 hover:outline-gray-200 text-gray-800 px-10 py-2" type="text" name="text" id="text" placeholder="Search By Title" />
         <SearchIcon className="text-gray-400 absolute top-1/2 -translate-y-1/2 left-2" />
       </div>
       {bikes.length ? (<>
-        <div className="w-11/12 md:w-10/12 max-w-[24rem] md:max-w-[80%] lg:max-w-[70%] m-auto">
+        <div className="flex justify-between items-center text-gray-800">
+          <h2 className="text-lg">Stolen Bikes : <span className="font-semibold">{count}</span> Bikes</h2>
+          <Link onClick={()=>window.location.reload()} to={"/"}>Refresh Result</Link>
+        </div>
+        <div>
           {bikes.map((bike: IBike) => <Bike key={bike.id} bike={bike} />)}
         </div>
-        {count! > 1 ? <PaginationComponent searchParams={searchParams} setSearchParams={setSearchParams} page={page} setPage={setPage} count={count!} />:null}</>)
+        {count! > 10 ? <PaginationComponent searchParams={searchParams} setSearchParams={setSearchParams} page={page} setPage={setPage} count={Math.ceil(count/10)} />:null}</>)
         : <NoBike />}
     </div>
   )
