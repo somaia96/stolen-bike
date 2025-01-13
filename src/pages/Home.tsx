@@ -7,17 +7,19 @@ import Alert from "@/components/Alert"
 import { KeyboardEvent, useState } from "react"
 import PaginationComponent from "@/components/Paginition"
 import { BikeIcon, SearchIcon } from "lucide-react"
-import NoBike from "@/components/NoBike"
+import NoBike from "@/components/NoBike";
+import { useSearchParams } from 'react-router-dom';
 
 const Home = () => {
-  const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
+  let [searchParams, setSearchParams] = useSearchParams({ page: "1", query: query });
+  const [page, setPage] = useState(+searchParams.get("page")!);
   // Count Of Pages
   const { error: countError, isLoading: loadingCount, data: count } = useQuery({
     queryKey: [`countData_${query}`],
     queryFn: async () => {
       const { data } = await instance.get(`/v3/search/count?query=${query}&stolenness=all`)
-      return data.stolen / 10
+      return data.stolen < 10 ? 1 : data.stolen/10
     }
   })
   // Search By Page Number & Title || All Bikes Information
@@ -33,6 +35,10 @@ const Home = () => {
     if (e.key == "Enter") {
       const target = e.target as HTMLTextAreaElement;
       setQuery(target.value)
+      searchParams.set("query", `${target.value}`)
+      setPage(1);
+      searchParams.set("page", `1`);
+      setSearchParams(searchParams)
     }
   }
 
@@ -52,7 +58,7 @@ const Home = () => {
         <div className="w-11/12 md:w-10/12 max-w-[24rem] md:max-w-[80%] lg:max-w-[70%] m-auto">
           {bikes.map((bike: IBike) => <Bike key={bike.id} bike={bike} />)}
         </div>
-        <PaginationComponent page={page} setPage={setPage} count={count!} /></>)
+        <PaginationComponent searchParams={searchParams} setSearchParams={setSearchParams} page={page} setPage={setPage} count={count!} /></>)
         : <NoBike />}
     </div>
   )
