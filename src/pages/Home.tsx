@@ -28,7 +28,8 @@ const Home = () => {
   })
   const onSearch = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key == "Enter") {
-      setQuery(e.target.value)
+      const target = e.target as HTMLTextAreaElement;
+      setQuery(target.value)
     }
   }
   if (isLoading || loadingCount) return <HomeSkeleton />
@@ -46,7 +47,7 @@ const Home = () => {
       {
         bikes.map((bike: IBike) => <Bike key={bike.id} bike={bike} />)
       }
-      <PaginationComponent page={page} setPage={setPage} count={count} />
+      <PaginationComponent page={page} setPage={setPage} count={count!} />
     </div>
   )
 }
