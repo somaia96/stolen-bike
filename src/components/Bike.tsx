@@ -28,7 +28,7 @@ export default function Bike({ bike }: IProps) {
             className="h-full w-full object-cover bg-transparent"
           /> : <BikeSvg />}
         </CardHeader>
-        <CardContent className="w-full md:w-1/2 p-6 space-y-3">
+        <CardContent className="w-full md:w-5/12 p-6 space-y-3">
           <CardTitle className="text-gray-800">
             {txtSlicer(bike.title, 30)}
           </CardTitle>

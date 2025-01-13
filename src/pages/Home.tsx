@@ -7,6 +7,7 @@ import Alert from "@/components/Alert"
 import { KeyboardEvent, useState } from "react"
 import PaginationComponent from "@/components/Paginition"
 import { BikeIcon, SearchIcon } from "lucide-react"
+import NoBike from "@/components/NoBike"
 
 const Home = () => {
   const [page, setPage] = useState(1);
@@ -47,10 +48,12 @@ const Home = () => {
         <input onKeyDown={onSearch} className="bg-gray-100 rounded-md w-full outline-gray-200 hover:outline-gray-200 text-gray-800 px-10 py-2" type="text" name="text" id="text" placeholder="Search By Title" />
         <SearchIcon className="text-gray-400 absolute top-1/2 -translate-y-1/2 left-2" />
       </div>
-      <div className="w-11/12 md:w-10/12 max-w-[24rem] md:max-w-[80%] lg:max-w-[70%] m-auto">
-        {bikes.map((bike: IBike) => <Bike key={bike.id} bike={bike} />)}
-      </div>
-      <PaginationComponent page={page} setPage={setPage} count={count!} />
+      {bikes.length ? (<>
+        <div className="w-11/12 md:w-10/12 max-w-[24rem] md:max-w-[80%] lg:max-w-[70%] m-auto">
+          {bikes.map((bike: IBike) => <Bike key={bike.id} bike={bike} />)}
+        </div>
+        <PaginationComponent page={page} setPage={setPage} count={count!} /></>)
+        : <NoBike />}
     </div>
   )
 }
