@@ -33,7 +33,6 @@ const PaginationComponent = ({ page, setPage, count, searchParams, setSearchPara
     setSearchParams(searchParams);
     setPage((prev) => prev - 1);
   }
-console.log(count);
 
   return (
     <div className="flex justify-items-center justify-center">
