@@ -58,7 +58,7 @@ const Home = () => {
         <div className="w-11/12 md:w-10/12 max-w-[24rem] md:max-w-[80%] lg:max-w-[70%] m-auto">
           {bikes.map((bike: IBike) => <Bike key={bike.id} bike={bike} />)}
         </div>
-        {count! > 0 ? <PaginationComponent searchParams={searchParams} setSearchParams={setSearchParams} page={page} setPage={setPage} count={count!} />:null}</>)
+        {count! > 1 ? <PaginationComponent searchParams={searchParams} setSearchParams={setSearchParams} page={page} setPage={setPage} count={count!} />:null}</>)
         : <NoBike />}
     </div>
   )
