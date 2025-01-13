@@ -13,7 +13,7 @@ interface IProps {
   setPage: (val: ((value: number) => number) | number) => void;
   page: number;
 }
-const PaginationComponent = ({ page, setPage, count }: IProps) => {
+const PaginationComponent = ({ page, setPage, count=1 }: IProps) => {
   const handleChangePage = (item: number) => {
     setPage(item)
   }
@@ -36,7 +36,7 @@ const PaginationComponent = ({ page, setPage, count }: IProps) => {
             Array.from(Array(count + 1).keys()).slice(count <= 3 ? 1 : (page <= count - 2 ? page : page - 2), page + 3).map((item, i) => {
               return (
                 <PaginationItem key={i}>
-                  <PaginationLink isActive={page == item} className="cursor-pointer" onClick={() => handleChangePage(item)}>
+                  <PaginationLink isActive={page == item} className="rounded-full cursor-pointer" onClick={() => handleChangePage(item)}>
                     {item}
                   </PaginationLink>
                 </PaginationItem>
@@ -47,7 +47,7 @@ const PaginationComponent = ({ page, setPage, count }: IProps) => {
             <PaginationEllipsis />
           </PaginationItem>
           <PaginationItem>
-            <PaginationLink isActive={page == count} className={page > count - 3 ? "hidden" : "cursor-pointer"} onClick={() => { setPage(count) }}>
+            <PaginationLink isActive={page == count} className={page > count - 3 ? "hidden" : "rounded-full cursor-pointer"} onClick={() => { setPage(count) }}>
               {count}
             </PaginationLink>
           </PaginationItem>

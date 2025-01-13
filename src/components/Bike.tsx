@@ -22,7 +22,7 @@ export default function Bike({ bike }: IProps) {
       <CardHeader className="m-0 h-56 md:h-auto w-full md:w-1/4 shrink-0 bg-cover bg-center bg-gray-100 flex justify-center items-center">
         {bike.large_img ? <img
           src={bike.thumb}
-          alt="card-image"
+          alt={bike.title}
           className="h-full w-full object-cover bg-transparent"
         /> : <BikeSvg />}
       </CardHeader>
