@@ -6,4 +6,5 @@ export interface IBike {
   large_img: string;
   date_stolen: number | null;
   thumb:string;
+  url:string;
 }
