@@ -18,16 +18,15 @@ const Home = () => {
   const { error: countError, isLoading: loadingCount, data: count } = useQuery({
     queryKey: [`countData_${query}`],
     queryFn: async () => {
-      const { data } = await instance.get(`/v3/search/count?query=${query}&stolenness=all`)
-      // return Math.ceil(data.stolen / 10)
-      return data.stolen
+      const { data } = await instance.get(`/v3/search/count?location=Munich&query=${query}&stolenness=proximity`)
+      return data.proximity
     }
   })
   // Search By Page Number & Title || All Bikes Information
   const { error, isLoading, data: bikes } = useQuery({
     queryKey: [`bikesData_${page + query}`],
     queryFn: async () => {
-      const { data } = await instance.get(`/v3/search?query=${query}&page=${page}&per_page=10`)
+      const { data } = await instance.get(`/v3/search?location=Munich&query=${query}&page=${page}&per_page=10&stolenness=proximity`)
       return data.bikes
     }
   })
